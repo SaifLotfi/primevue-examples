@@ -8,8 +8,14 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('primevue/button')['default']
+    Card: typeof import('primevue/card')['default']
+    EmployeeCards: typeof import('./src/components/EmployeeCards.vue')['default']
+    EmployeeForm: typeof import('./src/components/EmployeeForm.vue')['default']
+    Form: typeof import('@primevue/forms/form')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    InputText: typeof import('primevue/inputtext')['default']
     Menubar: typeof import('primevue/menubar')['default']
+    Message: typeof import('primevue/message')['default']
     Toast: typeof import('primevue/toast')['default']
   }
 }

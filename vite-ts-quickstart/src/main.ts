@@ -7,6 +7,7 @@ import App from './App.vue';
 import './assets/main.css';
 
 import 'primeicons/primeicons.css';
+import pinia from './stores';
 
 const app = createApp(App);
 
@@ -19,9 +20,10 @@ app.use(PrimeVue, {
       cssLayer: false,
     },
   },
-  ripple:true
+  ripple: true,
 });
 
 app.use(ToastService);
+app.use(pinia);
 
 app.mount('#app');
