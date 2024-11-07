@@ -44,9 +44,9 @@ const onFormSubmit = ({ valid, values }: { valid: boolean; values: any }) => {
       life: 3000,
     });
   }
- emit('submit', values); 
+  console.log('from form ,values',values)
+  emit('submit', values);
 };
-
 </script>
 
 <template>
@@ -55,8 +55,8 @@ const onFormSubmit = ({ valid, values }: { valid: boolean; values: any }) => {
       v-slot="$form"
       :resolver="resolver"
       :initialValues="initialValues"
-      @submit="onFormSubmit"
       class="flex flex-col gap-4 w-full sm:w-56"
+      @submit="onFormSubmit" 
     >
       <div class="flex flex-col gap-1">
         <InputText

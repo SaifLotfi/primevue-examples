@@ -3,10 +3,9 @@ import { ref } from 'vue';
 import EmployeeForm from './components/EmployeeForm.vue';
 import { Toast } from 'primevue';
 import EmployeeCards from './components/EmployeeCards.vue';
-import { Employee } from './types/employee';
 import { useEmployeesStore } from "./stores/EmployeesStore";
-import { useFormStore } from "./stores/formStore";
 import { storeToRefs } from "pinia";
+import { Employee } from './types/employee';
 
 const items = ref([
   {
@@ -17,9 +16,13 @@ const items = ref([
 
 const employeeStore = useEmployeesStore();
 
-const formStore = useFormStore();
 
 const { employees } = storeToRefs(employeeStore);
+
+const handleFormSubmit = (values:any) => {
+  console.log('Received form values:', values); // Confirm values received in App.vue
+  employeeStore.addEmployee(values);
+};
 
 </script>
 
@@ -31,7 +34,7 @@ const { employees } = storeToRefs(employeeStore);
 
   <header>
     <div class="wrapper">
-      <EmployeeForm @submit="employeeStore.addEmployee" />
+      <EmployeeForm @submit="handleFormSubmit" />
     </div>
   </header>
   <EmployeeCards @delete="employeeStore.deleteEmployee" :employees="employees" />

@@ -11,7 +11,6 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'submit', values: any): void;
   (e: 'delete', id: number): void;
 }>();
 
@@ -42,9 +41,6 @@ const editEmployee = (employee: Employee) => {
     :key="employee.id"
     style="width: 25rem; overflow: hidden"
   >
-    <!-- <template #header>
-            <img alt="user header" src="https://primefaces.org/cdn/primevue/images/usercard.png" />
-        </template> -->
     <template #title>{{ employee.firstName }}</template>
     <template #subtitle>{{ employee.lastName }}</template>
     <template #content>
