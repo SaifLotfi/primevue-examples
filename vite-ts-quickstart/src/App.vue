@@ -3,9 +3,9 @@ import { ref } from 'vue';
 import EmployeeForm from './components/EmployeeForm.vue';
 import { Toast } from 'primevue';
 import EmployeeCards from './components/EmployeeCards.vue';
-import { useEmployeesStore } from "./stores/EmployeesStore";
-import { storeToRefs } from "pinia";
-import { Employee } from './types/employee';
+import { useEmployeesStore } from './stores/EmployeesStore';
+import { useFormStore } from './stores/formStore';
+import { storeToRefs } from 'pinia';
 
 const items = ref([
   {
@@ -16,14 +16,27 @@ const items = ref([
 
 const employeeStore = useEmployeesStore();
 
+const formStore = useFormStore();
 
 const { employees } = storeToRefs(employeeStore);
+const { isEdit, id } = storeToRefs(formStore);
 
-const handleFormSubmit = (values:any) => {
-  console.log('Received form values:', values); // Confirm values received in App.vue
-  employeeStore.addEmployee(values);
+const handleFormSubmit = (values: any) => {
+  if (isEdit.value) {
+    employeeStore.editEmployee({ ...values, id: id.value });
+    isEdit.value = false;
+  } else {
+    employeeStore.addEmployee(values);
+  }
 };
 
+const handleDeleteEmployee = (id: number) => {
+  employeeStore.deleteEmployee(id);
+};
+
+// const handleEditEmployee = (employee: any) => {
+
+// }
 </script>
 
 <template>
@@ -37,7 +50,7 @@ const handleFormSubmit = (values:any) => {
       <EmployeeForm @submit="handleFormSubmit" />
     </div>
   </header>
-  <EmployeeCards @delete="employeeStore.deleteEmployee" :employees="employees" />
+  <EmployeeCards @delete="handleDeleteEmployee" :employees="employees" />
 </template>
 
 <style scoped>

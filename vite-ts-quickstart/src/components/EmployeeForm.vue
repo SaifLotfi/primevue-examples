@@ -8,19 +8,19 @@ import { useFormStore } from '../stores/formStore';
 
 const toast = useToast();
 
-const emit = defineEmits();
-
 const store = useFormStore();
+
+const emit = defineEmits(['submit']);
 
 const { firstName, lastName, email, salary, valid, form, isEdit } =
   storeToRefs(store);
 
-const initialValues = ref({
+const initialValues = {
   firstName,
   lastName,
   email,
   salary,
-});
+};
 
 const resolver = ref(
   zodResolver(
@@ -36,16 +36,22 @@ const resolver = ref(
   )
 );
 
-const onFormSubmit = ({ valid, values }: { valid: boolean; values: any }) => {
+const onFormSubmit = ({
+  valid,
+  values,
+}: {
+  valid: boolean;
+  values: any;
+}) => {
   if (valid) {
     toast.add({
       severity: 'success',
       summary: 'Form is submitted.',
       life: 3000,
     });
+    emit('submit', values);
+    store.getInitialState();
   }
-  console.log('from form ,values',values)
-  emit('submit', values);
 };
 </script>
 
@@ -54,9 +60,9 @@ const onFormSubmit = ({ valid, values }: { valid: boolean; values: any }) => {
     <Form
       v-slot="$form"
       :resolver="resolver"
-      :initialValues="initialValues"
       class="flex flex-col gap-4 w-full sm:w-56"
-      @submit="onFormSubmit" 
+      :initialValues="initialValues"
+      @submit="onFormSubmit"
     >
       <div class="flex flex-col gap-1">
         <InputText

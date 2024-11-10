@@ -8,8 +8,17 @@ export const useFormStore = defineStore("form", () => {
   const firstName = ref("");
   const lastName = ref("");
   const email = ref("");
-  const salary = ref<number | null>(null);
+  const salary = ref<string>('');
   const isEdit = ref(false);
 
-  return { form, valid,id, firstName, lastName, email, salary, isEdit };
+  const getInitialState = () => {
+    id.value = null;
+    firstName.value = "";
+    lastName.value = "";
+    email.value = "";
+    salary.value = '';
+    isEdit.value = false;
+  };
+
+  return { form, valid,id, firstName, lastName, email, salary, isEdit, getInitialState };
 });

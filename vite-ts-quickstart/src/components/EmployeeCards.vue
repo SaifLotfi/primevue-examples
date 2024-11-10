@@ -30,7 +30,6 @@ const editEmployee = (employee: Employee) => {
   lastName.value = employee.lastName;
   email.value = employee.email;
   salary.value = employee.salary;
-  valid.value = false;
   isEdit.value = true;
 };
 </script>
@@ -56,7 +55,7 @@ const editEmployee = (employee: Employee) => {
           class="w-full"
         />
 
-        <Button label="Save" class="w-full" />
+        <Button @click="editEmployee(employee)" label="Edit" class="w-full" />
       </div>
     </template>
   </Card>
