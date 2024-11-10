@@ -12,7 +12,7 @@ const store = useFormStore();
 
 const emit = defineEmits(['submit']);
 
-const { firstName, lastName, email, salary, valid, form, isEdit } =
+const { firstName, lastName, email, salary} =
   storeToRefs(store);
 
 const initialValues = {
@@ -50,7 +50,7 @@ const onFormSubmit = ({
       life: 3000,
     });
     emit('submit', values);
-    store.getInitialState();
+    store.setInitialState();
   }
 };
 </script>
@@ -75,9 +75,9 @@ const onFormSubmit = ({
           v-if="$form.firstName?.invalid"
           severity="error"
           size="small"
-          variant="simple"
-          >{{ $form.firstName.error?.message }}</Message
-        >
+          variant="simple">
+          {{ $form.firstName.error?.message }}
+        </Message >
       </div>
       <div class="flex flex-col gap-1">
         <InputText name="lastName" type="text" placeholder="Last Name" fluid />

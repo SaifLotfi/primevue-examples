@@ -33,10 +33,6 @@ const handleFormSubmit = (values: any) => {
 const handleDeleteEmployee = (id: number) => {
   employeeStore.deleteEmployee(id);
 };
-
-// const handleEditEmployee = (employee: any) => {
-
-// }
 </script>
 
 <template>
@@ -50,7 +46,11 @@ const handleDeleteEmployee = (id: number) => {
       <EmployeeForm @submit="handleFormSubmit" />
     </div>
   </header>
-  <EmployeeCards @delete="handleDeleteEmployee" :employees="employees" />
+  <div class="card flex justify-center">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <EmployeeCards @delete="handleDeleteEmployee" :employees="employees" />
+    </div>
+  </div>
 </template>
 
 <style scoped>

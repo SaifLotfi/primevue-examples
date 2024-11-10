@@ -11,7 +11,7 @@ export const useFormStore = defineStore("form", () => {
   const salary = ref<string>('');
   const isEdit = ref(false);
 
-  const getInitialState = () => {
+  const setInitialState = () => {
     id.value = null;
     firstName.value = "";
     lastName.value = "";
@@ -20,5 +20,5 @@ export const useFormStore = defineStore("form", () => {
     isEdit.value = false;
   };
 
-  return { form, valid,id, firstName, lastName, email, salary, isEdit, getInitialState };
+  return { form, valid,id, firstName, lastName, email, salary, isEdit, setInitialState };
 });
