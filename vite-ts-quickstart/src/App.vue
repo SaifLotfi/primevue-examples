@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { getCurrentInstance, onMounted, ref } from 'vue';
 import EmployeeForm from './components/EmployeeForm.vue';
 import { Toast } from 'primevue';
 import EmployeeCards from './components/EmployeeCards.vue';
@@ -19,20 +19,29 @@ const employeeStore = useEmployeesStore();
 const formStore = useFormStore();
 
 const { employees } = storeToRefs(employeeStore);
+
 const { isEdit, id } = storeToRefs(formStore);
 
-const handleFormSubmit = (values: any) => {
+const handleFormSubmit = async (values: any) => {
   if (isEdit.value) {
-    employeeStore.editEmployee({ ...values, id: id.value });
+    await employeeStore.editEmployee({ ...values, id: id.value });
     isEdit.value = false;
   } else {
-    employeeStore.addEmployee(values);
+    await employeeStore.addEmployee(values);
   }
 };
 
-const handleDeleteEmployee = (id: number) => {
-  employeeStore.deleteEmployee(id);
+const handleDeleteEmployee = async (id: number) => {
+  await employeeStore.deleteEmployee(id);
 };
+
+const getEmployees = async () => {
+  await employeeStore.getEmployees();
+};
+
+onMounted(async () => {
+  await getEmployees();
+});
 </script>
 
 <template>
@@ -48,7 +57,11 @@ const handleDeleteEmployee = (id: number) => {
   </header>
   <div class="card flex justify-center">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <EmployeeCards @delete="handleDeleteEmployee" :employees="employees" />
+      <EmployeeCards
+        @delete="handleDeleteEmployee"
+        :employees="employees"
+        :key="employees.length"
+      />
     </div>
   </div>
 </template>
