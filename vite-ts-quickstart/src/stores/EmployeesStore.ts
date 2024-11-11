@@ -8,9 +8,10 @@ export const useEmployeesStore = defineStore('employees', () => {
 
   const addEmployee = async (employee: Employee) => {
     try {
+      employees.value.push(employee);
       const response = await axios.post('http://localhost:5000/employees', employee);
-      employees.value.push(response.data);
-      console.log(employees.value);
+      employees.value[employees.value.length - 1].id = response.data.id;
+      console.log(employees.value,response.data);
     } catch (error) {
       console.log(error);
     }
@@ -18,8 +19,8 @@ export const useEmployeesStore = defineStore('employees', () => {
 
   const deleteEmployee = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:5000/employees/${id}`);
       employees.value = employees.value.filter((employee) => employee.id !== id);
+      await axios.delete(`http://localhost:5000/employees/${id}`);
     } catch (error) {
       console.log(error);
     }
@@ -27,11 +28,12 @@ export const useEmployeesStore = defineStore('employees', () => {
 
   const editEmployee = async (employee: Employee) => {
     try {
-      const response = await axios.put(`http://localhost:5000/employees/${employee.id}`, employee);
       const index = employees.value.findIndex((e) => e.id === employee.id);
       if (index !== -1) {
-        employees.value[index] = response.data;
+        employees.value[index] = employee;
       }
+      const response = await axios.put(`http://localhost:5000/employees/${employee.id}`, employee);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getCurrentInstance, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import EmployeeForm from './components/EmployeeForm.vue';
 import { Toast } from 'primevue';
 import EmployeeCards from './components/EmployeeCards.vue';
@@ -27,7 +27,7 @@ const handleFormSubmit = async (values: any) => {
     await employeeStore.editEmployee({ ...values, id: id.value });
     isEdit.value = false;
   } else {
-    await employeeStore.addEmployee(values);
+    employeeStore.addEmployee(values);
   }
 };
 
@@ -42,6 +42,7 @@ const getEmployees = async () => {
 onMounted(async () => {
   await getEmployees();
 });
+
 </script>
 
 <template>
@@ -57,11 +58,7 @@ onMounted(async () => {
   </header>
   <div class="card flex justify-center">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <EmployeeCards
-        @delete="handleDeleteEmployee"
-        :employees="employees"
-        :key="employees.length"
-      />
+      <EmployeeCards @delete="handleDeleteEmployee" :employees="employees" />
     </div>
   </div>
 </template>
@@ -71,6 +68,7 @@ body #app header {
   margin: 0;
   padding: 0;
 }
+
 header {
   height: 50vh;
   width: 100vw;
@@ -78,6 +76,7 @@ header {
   align-items: center;
   justify-content: center;
 }
+
 .wrapper {
   padding-left: 30px;
 }
